@@ -13,17 +13,24 @@ export async function execute(options: CommandOptions): Promise<void> {
     service: options.ecsService
   })
 
-  if (deployments.serviceDeployments && deployments.serviceDeployments.length > 0) {
+  if (
+    deployments.serviceDeployments &&
+    deployments.serviceDeployments.length > 0
+  ) {
     const latest = deployments.serviceDeployments[0]
     core.debug(`serviceDeploymentArn: ${latest.serviceDeploymentArn}`)
-    core.debug(`finishedAt: ${latest.finishedAt}`)
+    core.debug(`finishedAt: ${latest.finishedAt?.toLocaleString()}`)
     core.debug(`status: ${latest.status}`)
     switch (latest.status) {
       case 'SUCCESSFUL':
-        core.info(`Latest deployment was ${latest.status}! ${latest.finishedAt}`)
+        core.info(
+          `Latest deployment was ${latest.status}! ${latest.finishedAt?.toLocaleString()}`
+        )
         return
       case 'ROLLBACK_SUCCESSFUL':
-        core.error(`Latest deployment was ${latest.status}! ${latest.finishedAt}`)
+        core.error(
+          `Latest deployment was ${latest.status}! ${latest.finishedAt?.toLocaleString()}`
+        )
         return
     }
   }

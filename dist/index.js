@@ -53046,13 +53046,27 @@ exports.execute = execute;
 const core = __importStar(__nccwpck_require__(7484));
 const client_ecs_1 = __nccwpck_require__(212);
 async function execute(options) {
-    core.warning('Stopping now before making any changes');
     const ecs = new client_ecs_1.ECS();
     const deployments = await ecs.listServiceDeployments({
         cluster: options.ecsCluster,
         service: options.ecsService
     });
-    core.debug(JSON.stringify(deployments, null, 2));
+    if (deployments.serviceDeployments &&
+        deployments.serviceDeployments.length > 0) {
+        const latest = deployments.serviceDeployments[0];
+        core.debug(`serviceDeploymentArn: ${latest.serviceDeploymentArn}`);
+        core.debug(`finishedAt: ${latest.finishedAt?.toLocaleString()}`);
+        core.debug(`status: ${latest.status}`);
+        switch (latest.status) {
+            case 'SUCCESSFUL':
+                core.info(`Latest deployment was ${latest.status}! ${latest.finishedAt?.toLocaleString()}`);
+                return;
+            case 'ROLLBACK_SUCCESSFUL':
+                core.error(`Latest deployment was ${latest.status}! ${latest.finishedAt?.toLocaleString()}`);
+                return;
+        }
+    }
+    // core.debug(JSON.stringify(deployments, null, 2))
 }
 
 
