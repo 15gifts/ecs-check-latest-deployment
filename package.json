@@ -1,0 +1,64 @@
+{
+  "name": "typescript-action",
+  "description": "GitHub Actions TypeScript template",
+  "version": "0.0.0",
+  "author": "15gifts",
+  "private": true,
+  "homepage": "https://github.com/actions/typescript-action",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/actions/typescript-action.git"
+  },
+  "bugs": {
+    "url": "https://github.com/actions/typescript-action/issues"
+  },
+  "keywords": [
+    "actions",
+    "node",
+    "setup"
+  ],
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "engines": {
+    "node": ">=21"
+  },
+  "scripts": {
+    "bundle": "npm run format:write && npm run package",
+    "format:write": "npx prettier --write .",
+    "format:check": "npx prettier --check .",
+    "lint": "npx eslint . -c ./.github/linters/.eslintrc.yml",
+    "local-action": "npx local-action . src/main.ts .env",
+    "package": "npx ncc build src/index.ts -o dist --source-map --license licenses.txt",
+    "package:watch": "npm run package -- --watch",
+    "test": "vitest run",
+    "test:ci": "npm run test:coverage",
+    "test:dev": "vitest",
+    "test:coverage": "vitest run --coverage --no-color",
+    "test:coverage:browser": "npm run test:coverage && open reports/coverage/lcov-report/index.html",
+    "all": "npm run format:write && npm run lint && npm run test:coverage && npm run package"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@aws-sdk/client-ecs": "^3.823.0"
+  },
+  "devDependencies": {
+    "@github/local-action": "^2.2.1",
+    "@types/node": "^22.10.5",
+    "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
+    "@vercel/ncc": "^0.38.3",
+    "@vitest/coverage-v8": "^2.1.8",
+    "@vitest/eslint-plugin": "^1.1.24",
+    "eslint": "^8.57.0",
+    "eslint-plugin-jsonc": "^2.18.2",
+    "eslint-plugin-prettier": "^5.2.1",
+    "make-coverage-badge": "^1.2.0",
+    "prettier": "^3.4.2",
+    "prettier-eslint": "^16.3.0",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8",
+    "vitest-mock-extended": "^2.0.2"
+  }
+}
