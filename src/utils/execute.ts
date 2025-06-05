@@ -28,22 +28,22 @@ export async function execute(options: CommandOptions): Promise<void> {
   ) {
     const latest = deployments.serviceDeployments[0]
     core.debug(`serviceDeploymentArn: ${latest.serviceDeploymentArn}`)
-    core.debug(`finishedAt: ${latest.finishedAt?.toLocaleString()}`)
+    core.debug(`finishedAt: ${latest.finishedAt?.toLocaleDateString('en-GB')}`)
     core.debug(`status: ${latest.status}`)
     switch (latest.status) {
       case 'SUCCESSFUL':
         core.info(
-          `Latest deployment was ${latest.status} at ${latest.finishedAt?.toLocaleString()}`
+          `Latest deployment was ${latest.status} at ${latest.finishedAt?.toLocaleDateString('en-GB')}`
         )
         break
       case 'ROLLBACK_SUCCESSFUL':
         core.error(
-          `Latest deployment was in a failed state: ${latest.status} at ${latest.finishedAt?.toLocaleString()}`
+          `Latest deployment was in a failed state: ${latest.status} at ${latest.finishedAt?.toLocaleDateString('en-GB')}`
         )
         break
       default:
         core.error(
-          `Latest deployment was in an unexpected state: ${latest.status} at ${latest.finishedAt?.toLocaleString()}`
+          `Latest deployment was in an unexpected state: ${latest.status} at ${latest.finishedAt?.toLocaleDateString('en-GB') ?? '--'}`
         )
         break
     }
