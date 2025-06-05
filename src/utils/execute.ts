@@ -2,12 +2,18 @@ import * as core from '@actions/core'
 import { ECS } from '@aws-sdk/client-ecs'
 
 export interface CommandOptions {
+  dryRun: boolean
   ecsCluster: string
   ecsService: string
   awsRegion: string
 }
 
 export async function execute(options: CommandOptions): Promise<void> {
+  if (options.dryRun) {
+    core.info('All fine, nothing to see here')
+    return
+  }
+
   process.env.AWS_REGION = options.awsRegion
 
   const ecs = new ECS()
@@ -42,6 +48,4 @@ export async function execute(options: CommandOptions): Promise<void> {
         break
     }
   }
-
-  // core.debug(JSON.stringify(deployments, null, 2))
 }

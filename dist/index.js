@@ -52970,6 +52970,7 @@ const execute_1 = __nccwpck_require__(4854);
 async function run() {
     try {
         const options = {
+            dryRun: (core.getInput('dry-run') ?? 'false') === 'true',
             ecsCluster: core.getInput('ecs-cluster', { required: true }),
             ecsService: core.getInput('ecs-service', { required: true }),
             awsRegion: core.getInput('aws-region', { required: true })
@@ -53037,6 +53038,10 @@ exports.execute = execute;
 const core = __importStar(__nccwpck_require__(7484));
 const client_ecs_1 = __nccwpck_require__(212);
 async function execute(options) {
+    if (options.dryRun) {
+        core.info('All fine, nothing to see here');
+        return;
+    }
     process.env.AWS_REGION = options.awsRegion;
     const ecs = new client_ecs_1.ECS();
     const deployments = await ecs.listServiceDeployments({
@@ -53061,7 +53066,6 @@ async function execute(options) {
                 break;
         }
     }
-    // core.debug(JSON.stringify(deployments, null, 2))
 }
 
 

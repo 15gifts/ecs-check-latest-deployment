@@ -7,6 +7,9 @@ branding:
   color: 'red'
 
 inputs:
+  dry-run:
+    description: 'For testing only, does nothing'
+    required: false
   ecs-cluster:
     description: 'The name of the ECS cluster to deploy to'
     required: true
