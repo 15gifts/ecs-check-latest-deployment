@@ -13,7 +13,7 @@ export async function execute(options: CommandOptions): Promise<void> {
   const ecs = new ECS()
   const deployments = await ecs.listServiceDeployments({
     cluster: options.ecsCluster,
-    service: options.ecsService,
+    service: options.ecsService
   })
 
   if (

@@ -52970,8 +52970,9 @@ const execute_1 = __nccwpck_require__(4854);
 async function run() {
     try {
         const options = {
-            ecsCluster: core.getInput('ecs-cluster'),
-            ecsService: core.getInput('ecs-service')
+            ecsCluster: core.getInput('ecs-cluster', { required: true }),
+            ecsService: core.getInput('ecs-service', { required: true }),
+            awsRegion: core.getInput('aws-region', { required: true })
         };
         if (!options.ecsCluster) {
             throw new Error('ECS cluster not specified');
@@ -53036,6 +53037,7 @@ exports.execute = execute;
 const core = __importStar(__nccwpck_require__(7484));
 const client_ecs_1 = __nccwpck_require__(212);
 async function execute(options) {
+    process.env.AWS_REGION = options.awsRegion;
     const ecs = new client_ecs_1.ECS();
     const deployments = await ecs.listServiceDeployments({
         cluster: options.ecsCluster,
@@ -53049,11 +53051,14 @@ async function execute(options) {
         core.debug(`status: ${latest.status}`);
         switch (latest.status) {
             case 'SUCCESSFUL':
-                core.info(`Latest deployment was ${latest.status}! ${latest.finishedAt?.toLocaleString()}`);
-                return;
+                core.info(`Latest deployment was ${latest.status} at ${latest.finishedAt?.toLocaleString()}`);
+                break;
             case 'ROLLBACK_SUCCESSFUL':
-                core.error(`Latest deployment was ${latest.status}! ${latest.finishedAt?.toLocaleString()}`);
-                return;
+                core.error(`Latest deployment was in a failed state: ${latest.status} at ${latest.finishedAt?.toLocaleString()}`);
+                break;
+            default:
+                core.error(`Latest deployment was in an unexpected state: ${latest.status} at ${latest.finishedAt?.toLocaleString()}`);
+                break;
         }
     }
     // core.debug(JSON.stringify(deployments, null, 2))
