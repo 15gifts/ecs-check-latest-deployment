@@ -53051,18 +53051,18 @@ async function execute(options) {
     if (deployments.serviceDeployments &&
         deployments.serviceDeployments.length > 0) {
         const latest = deployments.serviceDeployments[0];
+        const date = latest.finishedAt?.toLocaleDateString('en-GB');
+        const time = latest.finishedAt?.toLocaleTimeString('en-GB');
         core.debug(`serviceDeploymentArn: ${latest.serviceDeploymentArn}`);
-        core.debug(`finishedAt: ${latest.finishedAt?.toLocaleDateString('en-GB')}`);
-        core.debug(`status: ${latest.status}`);
         switch (latest.status) {
             case 'SUCCESSFUL':
-                core.info(`Latest deployment was ${latest.status} at ${latest.finishedAt?.toLocaleDateString('en-GB')}`);
+                core.info(`Latest deployment was ${latest.status} at ${date} ${time}`);
                 break;
             case 'ROLLBACK_SUCCESSFUL':
-                core.setFailed(`Latest deployment was in a failed state: ${latest.status} at ${latest.finishedAt?.toLocaleDateString('en-GB')}`);
+                core.setFailed(`Latest deployment was in a failed state: ${latest.status} at ${date} ${time}`);
                 break;
             default:
-                core.setFailed(`Latest deployment was in an unexpected state: ${latest.status} at ${latest.finishedAt?.toLocaleDateString('en-GB') ?? '--'}`);
+                core.setFailed(`Latest deployment was in an unexpected state: ${latest.status} at ${date} ${time}`);
                 break;
         }
     }
