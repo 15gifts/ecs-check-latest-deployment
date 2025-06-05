@@ -53059,12 +53059,15 @@ async function execute(options) {
                 core.info(`Latest deployment was ${latest.status} at ${latest.finishedAt?.toLocaleDateString('en-GB')}`);
                 break;
             case 'ROLLBACK_SUCCESSFUL':
-                core.error(`Latest deployment was in a failed state: ${latest.status} at ${latest.finishedAt?.toLocaleDateString('en-GB')}`);
+                core.setFailed(`Latest deployment was in a failed state: ${latest.status} at ${latest.finishedAt?.toLocaleDateString('en-GB')}`);
                 break;
             default:
-                core.error(`Latest deployment was in an unexpected state: ${latest.status} at ${latest.finishedAt?.toLocaleDateString('en-GB') ?? '--'}`);
+                core.setFailed(`Latest deployment was in an unexpected state: ${latest.status} at ${latest.finishedAt?.toLocaleDateString('en-GB') ?? '--'}`);
                 break;
         }
+    }
+    else {
+        core.setFailed('No service deployment details were returned');
     }
 }
 

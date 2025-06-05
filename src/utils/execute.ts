@@ -37,15 +37,17 @@ export async function execute(options: CommandOptions): Promise<void> {
         )
         break
       case 'ROLLBACK_SUCCESSFUL':
-        core.error(
+        core.setFailed(
           `Latest deployment was in a failed state: ${latest.status} at ${latest.finishedAt?.toLocaleDateString('en-GB')}`
         )
         break
       default:
-        core.error(
+        core.setFailed(
           `Latest deployment was in an unexpected state: ${latest.status} at ${latest.finishedAt?.toLocaleDateString('en-GB') ?? '--'}`
         )
         break
     }
+  } else {
+    core.setFailed('No service deployment details were returned')
   }
 }
