@@ -4,13 +4,16 @@ import { ECS } from '@aws-sdk/client-ecs'
 export interface CommandOptions {
   ecsCluster: string
   ecsService: string
+  awsRegion: string
 }
 
 export async function execute(options: CommandOptions): Promise<void> {
+  process.env.AWS_REGION = options.awsRegion
+
   const ecs = new ECS()
   const deployments = await ecs.listServiceDeployments({
     cluster: options.ecsCluster,
-    service: options.ecsService
+    service: options.ecsService,
   })
 
   if (
@@ -24,14 +27,19 @@ export async function execute(options: CommandOptions): Promise<void> {
     switch (latest.status) {
       case 'SUCCESSFUL':
         core.info(
-          `Latest deployment was ${latest.status}! ${latest.finishedAt?.toLocaleString()}`
+          `Latest deployment was ${latest.status} at ${latest.finishedAt?.toLocaleString()}`
         )
-        return
+        break
       case 'ROLLBACK_SUCCESSFUL':
         core.error(
-          `Latest deployment was ${latest.status}! ${latest.finishedAt?.toLocaleString()}`
+          `Latest deployment was in a failed state: ${latest.status} at ${latest.finishedAt?.toLocaleString()}`
         )
-        return
+        break
+      default:
+        core.error(
+          `Latest deployment was in an unexpected state: ${latest.status} at ${latest.finishedAt?.toLocaleString()}`
+        )
+        break
     }
   }
 

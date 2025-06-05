@@ -2,21 +2,20 @@ name: '15gifts ECS Check Latest Deployments'
 description: 'Ensures the latest ECS deployment was successful'
 author: '15gifts'
 
-# Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
   icon: 'heart'
   color: 'red'
 
-# Define your inputs here.
 inputs:
   ecs-cluster:
     description: 'The name of the ECS cluster to deploy to'
     required: true
-    type: string
   ecs-service:
     description: 'The name of the ECS service to deploy to'
     required: true
-    type: string
+  aws-region:
+    description: 'The AWS region where the ECS cluster is located (e.g., us-east-1).'
+    required: true
 
 runs:
   using: node20

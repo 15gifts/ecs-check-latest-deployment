@@ -9,8 +9,9 @@ import { CommandOptions, execute } from './utils/execute'
 export async function run(): Promise<void> {
   try {
     const options: CommandOptions = {
-      ecsCluster: core.getInput('ecs-cluster'),
-      ecsService: core.getInput('ecs-service')
+      ecsCluster: core.getInput('ecs-cluster', { required: true }),
+      ecsService: core.getInput('ecs-service', { required: true }),
+      awsRegion: core.getInput('aws-region', { required: true })
     }
 
     if (!options.ecsCluster) {
