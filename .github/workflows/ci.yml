@@ -59,3 +59,4 @@ jobs:
         with:
           ecs-cluster: 'test-cluster'
           ecs-service: 'test-service'
+          aws-region: 'eu-west-1'
