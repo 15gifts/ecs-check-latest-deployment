@@ -41,6 +41,6 @@ steps:
 
 ## Next Steps
 
-1. Ensure that your AWS credentials are securely configured in your environment.
-2. Run this check after each deployment to safeguard against unintended
-   rollbacks.
+- Ensure that your AWS credentials are securely configured in your environment.
+- Run this check after each deployment to safeguard against unintended
+  rollbacks.
