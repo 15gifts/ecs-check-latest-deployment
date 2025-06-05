@@ -1,6 +1,7 @@
 # ECS Deployment Check
 
-This check ensures that the last deployment to ECS was successful and not rolled back to a previous version.
+This check ensures that the last deployment to ECS was successful and not rolled
+back to a previous version.
 
 ## Required Parameters
 
@@ -10,7 +11,10 @@ This check ensures that the last deployment to ECS was successful and not rolled
 
 ## How It Works
 
-This script utilizes the AWS CLI to retrieve the current deployment details from Amazon ECS. It verifies that the most recent deployment is successful. If the deployment has been rolled back to a previous version, the check will flag the issue.
+This script utilizes the AWS CLI to retrieve the current deployment details from
+Amazon ECS. It verifies that the most recent deployment is successful. If the
+deployment has been rolled back to a previous version, the check will flag the
+issue.
 
 ## Usage in a Workflow
 
@@ -38,4 +42,5 @@ steps:
 ## Next Steps
 
 1. Ensure that your AWS credentials are securely configured in your environment.
-2. Run this check after each deployment to safeguard against unintended rollbacks.
+2. Run this check after each deployment to safeguard against unintended
+   rollbacks.
