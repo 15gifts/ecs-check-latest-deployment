@@ -52983,7 +52983,6 @@ async function run() {
         }
         core.debug(`Checking latest ECS deployment using ${JSON.stringify(options, null, 2)}...`);
         await (0, execute_1.execute)(options);
-        core.debug(`All clear on the western front.`);
     }
     catch (error) {
         // Fail the workflow run if an error occurs

@@ -31,8 +31,6 @@ export async function run(): Promise<void> {
     )
 
     await execute(options)
-
-    core.debug(`All clear on the western front.`)
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
