@@ -41,7 +41,7 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.11.1",
-    "@aws-sdk/client-ecs": "^3.823.0"
+    "@aws-sdk/client-ecs": "^3.829.0"
   },
   "devDependencies": {
     "@github/local-action": "^2.2.1",
