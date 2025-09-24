@@ -32,11 +32,11 @@ export async function execute(options: CommandOptions): Promise<void> {
     core.debug(`serviceDeploymentArn: ${latest.serviceDeploymentArn}`)
     switch (latest.status) {
       case 'SUCCESSFUL':
-        core.info(`Latest deployment was ${latest.status} at ${date} ${time}`)
+        core.info(`Latest deployment was successful at ${date} ${time}`)
         break
       case 'ROLLBACK_SUCCESSFUL':
         core.setFailed(
-          `Latest deployment was in a failed state: ${latest.status} at ${date} ${time}`
+          `Latest deployment was aborted and has been rolled back at ${date} ${time}`
         )
         break
       default:
