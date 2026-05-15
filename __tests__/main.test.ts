@@ -6,54 +6,52 @@
  * variables following the pattern `INPUT_<INPUT_NAME>`.
  */
 
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import * as core from "@actions/core";
-import * as main from "../src/main";
+import { describe, it, expect, vi, beforeEach } from "vitest"
+import * as core from "@actions/core"
+import * as main from "../src/main"
 
 describe("action", () => {
-	const debugMock = vi.spyOn(core, "debug").mockImplementation(() => {});
-	const errorMock = vi.spyOn(core, "error").mockImplementation(() => {});
-	const getInputMock = vi.spyOn(core, "getInput").mockImplementation(() => "");
-	const setFailedMock = vi
-		.spyOn(core, "setFailed")
-		.mockImplementation(() => {});
+  const debugMock = vi.spyOn(core, "debug").mockImplementation(() => {})
+  const errorMock = vi.spyOn(core, "error").mockImplementation(() => {})
+  const getInputMock = vi.spyOn(core, "getInput").mockImplementation(() => "")
+  const setFailedMock = vi.spyOn(core, "setFailed").mockImplementation(() => {})
 
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
 
-	it("debugs out an input", async () => {
-		// Set the action's inputs as return values from core.getInput()
-		getInputMock.mockImplementation((name) => {
-			switch (name) {
-				case "ecs-cluster":
-					return "test-cluster";
-				case "ecs-service":
-					return "test-service";
-				default:
-					return "";
-			}
-		});
+  it("debugs out an input", async () => {
+    // Set the action's inputs as return values from core.getInput()
+    getInputMock.mockImplementation((name) => {
+      switch (name) {
+        case "ecs-cluster":
+          return "test-cluster"
+        case "ecs-service":
+          return "test-service"
+        default:
+          return ""
+      }
+    })
 
-		await main.run();
+    await main.run()
 
-		expect(debugMock).toHaveBeenNthCalledWith(
-			1,
-			expect.stringContaining("Checking latest ECS deployment using"),
-		);
-	});
+    expect(debugMock).toHaveBeenNthCalledWith(
+      1,
+      expect.stringContaining("Checking latest ECS deployment using"),
+    )
+  })
 
-	it("sets a failed status", async () => {
-		// Set the action's inputs as return values from core.getInput()
-		getInputMock.mockImplementation(() => "");
+  it("sets a failed status", async () => {
+    // Set the action's inputs as return values from core.getInput()
+    getInputMock.mockImplementation(() => "")
 
-		await main.run();
+    await main.run()
 
-		// Verify that all of the core library functions were called correctly
-		expect(setFailedMock).toHaveBeenNthCalledWith(
-			1,
-			"ECS cluster not specified",
-		);
-		expect(errorMock).not.toHaveBeenCalled();
-	});
-});
+    // Verify that all of the core library functions were called correctly
+    expect(setFailedMock).toHaveBeenNthCalledWith(
+      1,
+      "ECS cluster not specified",
+    )
+    expect(errorMock).not.toHaveBeenCalled()
+  })
+})
