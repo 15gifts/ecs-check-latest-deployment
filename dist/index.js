@@ -52970,16 +52970,16 @@ const execute_1 = __nccwpck_require__(4854);
 async function run() {
     try {
         const options = {
-            dryRun: (core.getInput('dry-run') ?? 'false') === 'true',
-            ecsCluster: core.getInput('ecs-cluster', { required: true }),
-            ecsService: core.getInput('ecs-service', { required: true }),
-            awsRegion: core.getInput('aws-region', { required: true })
+            dryRun: (core.getInput("dry-run") ?? "false") === "true",
+            ecsCluster: core.getInput("ecs-cluster", { required: true }),
+            ecsService: core.getInput("ecs-service", { required: true }),
+            awsRegion: core.getInput("aws-region", { required: true }),
         };
         if (!options.ecsCluster) {
-            throw new Error('ECS cluster not specified');
+            throw new Error("ECS cluster not specified");
         }
         if (!options.ecsService) {
-            throw new Error('ECS service not specified');
+            throw new Error("ECS service not specified");
         }
         core.debug(`Checking latest ECS deployment using ${JSON.stringify(options, null, 2)}...`);
         await (0, execute_1.execute)(options);
@@ -53038,26 +53038,26 @@ const core = __importStar(__nccwpck_require__(7484));
 const client_ecs_1 = __nccwpck_require__(212);
 async function execute(options) {
     if (options.dryRun) {
-        core.info('All fine, nothing to see here');
+        core.info("All fine, nothing to see here");
         return;
     }
     process.env.AWS_REGION = options.awsRegion;
     const ecs = new client_ecs_1.ECS();
     const deployments = await ecs.listServiceDeployments({
         cluster: options.ecsCluster,
-        service: options.ecsService
+        service: options.ecsService,
     });
     if (deployments.serviceDeployments &&
         deployments.serviceDeployments.length > 0) {
         const latest = deployments.serviceDeployments[0];
-        const date = latest.finishedAt?.toLocaleDateString('en-GB');
-        const time = latest.finishedAt?.toLocaleTimeString('en-GB');
+        const date = latest.finishedAt?.toLocaleDateString("en-GB");
+        const time = latest.finishedAt?.toLocaleTimeString("en-GB");
         core.debug(`serviceDeploymentArn: ${latest.serviceDeploymentArn}`);
         switch (latest.status) {
-            case 'SUCCESSFUL':
+            case "SUCCESSFUL":
                 core.info(`Latest deployment was ${latest.status} at ${date} ${time}`);
                 break;
-            case 'ROLLBACK_SUCCESSFUL':
+            case "ROLLBACK_SUCCESSFUL":
                 core.setFailed(`Latest deployment was in a failed state: ${latest.status} at ${date} ${time}`);
                 break;
             default:
@@ -53066,7 +53066,7 @@ async function execute(options) {
         }
     }
     else {
-        core.setFailed('No service deployment details were returned');
+        core.setFailed("No service deployment details were returned");
     }
 }
 
