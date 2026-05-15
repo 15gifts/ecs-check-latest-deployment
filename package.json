@@ -24,7 +24,7 @@
     "node": ">=21"
   },
   "scripts": {
-    "bundle": "npm run format:write && npm run package",
+    "bundle": "npm run biome:format && npm run package",
     "biome:format": "npx @biomejs/biome format --write ./",
     "lint": "npx eslint . -c ./.github/linters/.eslintrc.yml",
     "local-action": "npx local-action . src/main.ts .env",
