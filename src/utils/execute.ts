@@ -1,5 +1,5 @@
-import * as core from "@actions/core"
-import { ECS } from "@aws-sdk/client-ecs"
+import * as core from '@actions/core'
+import { ECS } from '@aws-sdk/client-ecs'
 
 export interface CommandOptions {
   dryRun: boolean
@@ -10,7 +10,7 @@ export interface CommandOptions {
 
 export async function execute(options: CommandOptions): Promise<void> {
   if (options.dryRun) {
-    core.info("All fine, nothing to see here")
+    core.info('All fine, nothing to see here')
     return
   }
 
@@ -27,14 +27,14 @@ export async function execute(options: CommandOptions): Promise<void> {
     deployments.serviceDeployments.length > 0
   ) {
     const latest = deployments.serviceDeployments[0]
-    const date = latest.finishedAt?.toLocaleDateString("en-GB")
-    const time = latest.finishedAt?.toLocaleTimeString("en-GB")
+    const date = latest.finishedAt?.toLocaleDateString('en-GB')
+    const time = latest.finishedAt?.toLocaleTimeString('en-GB')
     core.debug(`serviceDeploymentArn: ${latest.serviceDeploymentArn}`)
     switch (latest.status) {
-      case "SUCCESSFUL":
+      case 'SUCCESSFUL':
         core.info(`Latest deployment was ${latest.status} at ${date} ${time}`)
         break
-      case "ROLLBACK_SUCCESSFUL":
+      case 'ROLLBACK_SUCCESSFUL':
         core.setFailed(
           `Latest deployment was in a failed state: ${latest.status} at ${date} ${time}`,
         )
@@ -46,6 +46,6 @@ export async function execute(options: CommandOptions): Promise<void> {
         break
     }
   } else {
-    core.setFailed("No service deployment details were returned")
+    core.setFailed('No service deployment details were returned')
   }
 }

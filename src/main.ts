@@ -1,6 +1,6 @@
-import * as core from "@actions/core"
+import * as core from '@actions/core'
 
-import { CommandOptions, execute } from "./utils/execute"
+import { CommandOptions, execute } from './utils/execute'
 
 /**
  * The main function for the action.
@@ -9,17 +9,17 @@ import { CommandOptions, execute } from "./utils/execute"
 export async function run(): Promise<void> {
   try {
     const options: CommandOptions = {
-      dryRun: (core.getInput("dry-run") ?? "false") === "true",
-      ecsCluster: core.getInput("ecs-cluster", { required: true }),
-      ecsService: core.getInput("ecs-service", { required: true }),
-      awsRegion: core.getInput("aws-region", { required: true }),
+      dryRun: (core.getInput('dry-run') ?? 'false') === 'true',
+      ecsCluster: core.getInput('ecs-cluster', { required: true }),
+      ecsService: core.getInput('ecs-service', { required: true }),
+      awsRegion: core.getInput('aws-region', { required: true }),
     }
 
     if (!options.ecsCluster) {
-      throw new Error("ECS cluster not specified")
+      throw new Error('ECS cluster not specified')
     }
     if (!options.ecsService) {
-      throw new Error("ECS service not specified")
+      throw new Error('ECS service not specified')
     }
 
     core.debug(
