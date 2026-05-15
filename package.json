@@ -26,8 +26,6 @@
 	"scripts": {
 		"bundle": "npm run format:write && npm run package",
 		"biome:format": "npx @biomejs/biome format --write ./",
-		"format:write": "npx prettier --write .",
-		"format:check": "npx prettier --check .",
 		"lint": "npx eslint . -c ./.github/linters/.eslintrc.yml",
 		"local-action": "npx local-action . src/main.ts .env",
 		"package": "npx ncc build src/index.ts -o dist --source-map --license licenses.txt",
@@ -55,10 +53,7 @@
 		"@vitest/eslint-plugin": "^1.1.24",
 		"eslint": "^8.57.0",
 		"eslint-plugin-jsonc": "^2.18.2",
-		"eslint-plugin-prettier": "^5.2.1",
 		"make-coverage-badge": "^1.2.0",
-		"prettier": "^3.4.2",
-		"prettier-eslint": "^16.3.0",
 		"typescript": "^5.7.2",
 		"vitest": "^2.1.8",
 		"vitest-mock-extended": "^2.0.2"
