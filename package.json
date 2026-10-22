@@ -59,6 +59,6 @@
     "prettier-eslint": "^16.3.0",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8",
-    "vitest-mock-extended": "^2.0.2"
+    "vitest-mock-extended": "^3.1.0"
   }
 }
